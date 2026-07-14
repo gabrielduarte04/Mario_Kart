@@ -4,7 +4,7 @@
 #include "pilotos.h"
 
 //criando um piloto
-Piloto* criarPiloto(const char *nome, const char *categoria, char *status, int velBase, int qtdTrofeus){
+Piloto* criar_piloto(const char *nome, const char *categoria, char *status, int velBase, int qtdTrofeus){
     Piloto* p = (Piloto*) malloc(sizeof(Piloto));
 
     if(p != NULL){
@@ -26,12 +26,12 @@ Piloto* criarPiloto(const char *nome, const char *categoria, char *status, int v
 }
 
 //imprimindo informações de um piloto especifico
-void imprimirPiloto(Piloto *p){
-    printf("Piloto: %s/nCategoria: %s/nStatus: %s/nVelocidade Base: %d\nQuantidade de Troféus: %d", p->nome, p->categoria, p->status, p->velBase, p->qtdTrofeus);
+void imprimir_piloto(Piloto *p){
+    printf("Piloto: %s\nCategoria: %s\nStatus: %s\nVelocidade Base: %d\nQuantidade de Troféus: %d", p->nome, p->categoria, p->status, p->velBase, p->qtdTrofeus);
 }
 
 //libera memoria de um piloto especifico
-void liberarPiloto(Piloto *p){
+void liberar_piloto(Piloto *p){
     if(p != NULL){
         free(p);
     }

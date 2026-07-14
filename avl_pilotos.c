@@ -130,9 +130,7 @@ NoAVL* remover_piloto_no(NoAVL *raiz, const char *nome) {
             
             // Substitui o piloto atual pelo sucessor em ordem
             liberar_piloto(raiz->piloto);
-            raiz->piloto = criar_piloto(temp->piloto->nome, temp->piloto->categoria, 
-                                        temp->piloto->velBase, temp->piloto->qtdTrofeus, 
-                                        temp->piloto->status);
+            raiz->piloto = criar_piloto(temp->piloto->nome, temp->piloto->categoria, temp->piloto->status, temp->piloto->velBase, temp->piloto->qtdTrofeus);
 
             raiz->direita = remover_piloto_no(raiz->direita, temp->piloto->nome);
         }

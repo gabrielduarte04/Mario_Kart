@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 // Inclusão de todos os TADS do sistema
@@ -17,14 +18,19 @@
 // Função para iniciar o sistema com dados iniciais 
 void inicializar_sistema(NoAVL **arvore, MaxHeap *heap, PilhaItens *pilha_cogumelos, PilhaItens *pilha_cascos, Kart *frota[]) {
     // Cadastrando Pilotos com a função criarPiloto e ordem correta (nome, categoria, status, velBase, qtdTrofeus)
-    *arvore = inserir_piloto_no(*arvore, criarPiloto("Mario", "Medio", "Disponivel", 85, 10));
-    *arvore = inserir_piloto_no(*arvore, criarPiloto("Bowser", "Pesado", "Disponivel", 95, 8));
-    *arvore = inserir_piloto_no(*arvore, criarPiloto("Toad", "Leve", "Disponivel", 70, 5));
+    *arvore = inserir_piloto_no(*arvore, criar_piloto("Mario", "Medio", "Disponivel", 85, 10));
+    *arvore = inserir_piloto_no(*arvore, criar_piloto("Bowser", "Pesado", "Disponivel", 95, 8));
+    *arvore = inserir_piloto_no(*arvore, criar_piloto("Toad", "Leve", "Disponivel", 70, 5));
 
     // Cadastrando Corridas 
     inserir_corrida_heap(heap, criar_corrida(1, "Rainbow Road", 3, 99, "Espacial"));
     inserir_corrida_heap(heap, criar_corrida(2, "Luigi Circuit", 3, 20, "Ensolarado"));
     inserir_corrida_heap(heap, criar_corrida(3, "Bowser's Castle", 3, 85, "Lava"));
+    inserir_corrida_heap(heap, criar_corrida(4, "Yoshi Valley", 3, 40, "Floresta"));
+    inserir_corrida_heap(heap, criar_corrida(5, "Wario Stadium", 3, 75, "Arena"));
+    inserir_corrida_heap(heap, criar_corrida(6, "Donut Plains", 3, 30, "Campo"));
+    inserir_corrida_heap(heap, criar_corrida(7, "Sherbet Land", 3, 55, "Gelo"));
+    inserir_corrida_heap(heap, criar_corrida(8, "Toad's Turnpike", 3, 65, "Cidade"));
 
     // Cadastrando Itens
     adicionar_ao_estoque(pilha_cogumelos, criar_item("Cogumelo Dourado", "Epico", 30));
@@ -66,9 +72,11 @@ int main() {
         printf("4. Historico de Corridas\n");
         printf("5. Encerrar Temporada (Ver Campeao)\n");
         printf("6. [!] INICIAR PROXIMA CORRIDA [!]\n");
-        printf("7. Sair e Desligar Sistema\n");
+        printf("7. Cadastrar Novo Piloto\n");
+        //printf("8. Cadastrar Nova Corrida\n");
+        printf("8. Sair e Desligar Sistema\n");
         printf("Escolha uma opcao: ");
-        scanf("%c", &opcao);
+        scanf(" %c", &opcao);
 
         switch (opcao) {
             case '1':
@@ -91,11 +99,7 @@ int main() {
                 determinar_campeao(arvore_pilotos);
                 break;
             case '6': {
-                // ---------------------------------------------------------
-                // 3. A INTEGRAÇÃO GLOBAL: FASE DE PREPARAÇÃO E SIMULAÇÃO
-                // ---------------------------------------------------------
-                
-                // A. Puxa a corrida mais perigosa do Max-Heap
+                // Puxa a corrida mais perigosa do Max-Heap
                 Corrida *corrida_atual = extrair_proxima_corrida(central_corridas);
                 
                 if (corrida_atual == NULL) {
@@ -103,30 +107,30 @@ int main() {
                     break;
                 }
 
-                // B. Escala os participantes (Buscando na Árvore AVL)
+                // Escala os participantes (Buscando na Árvore AVL)
                 Participante grid[3];
                 grid[0].piloto = buscar_piloto_por_nome(arvore_pilotos, "Mario");
                 grid[1].piloto = buscar_piloto_por_nome(arvore_pilotos, "Bowser");
                 grid[2].piloto = buscar_piloto_por_nome(arvore_pilotos, "Toad");
 
-                // C. Atribui os Karts
+                // Atribui os Karts
                 grid[0].kart = frota_karts[0];
                 grid[1].kart = frota_karts[1];
                 grid[2].kart = frota_karts[2];
 
-                // D. Distribui os Itens (Retirando das Pilhas)
+                // Distribui os Itens (Retirando das Pilhas)
                 grid[0].item = distribuir_item(pilha_cogumelos);
                 grid[1].item = distribuir_item(pilha_cascos);
                 grid[2].item = NULL; // Toad corre sem item nesta simulação
 
-                // E. Roda a Matemática da Corrida
+                // Roda a Matemática da Corrida
                 simular_corrida(corrida_atual, grid, 3);
 
-                // F. Consequências da Corrida
+                // Consequências da Corrida
                 atualizar_pontuacoes(grid, 3); // Atualiza o ranking do campeonato
                 registrar_corrida_historico(historico, corrida_atual, grid, 3); // Salva na Lista Dupla
 
-                // G. Envia os karts quebrados para as Filas da Oficina
+                // Envia os karts quebrados para as Filas da Oficina
                 for (int i = 0; i < 3; i++) {
                     if (strcmp(grid[i].kart->status, "Danificado") == 0 || 
                         strcmp(grid[i].kart->status, "Destruido") == 0) {
@@ -140,7 +144,7 @@ int main() {
                     }
                 }
 
-                // Libera a memória da corrida finalizada
+                //Libera a memória da corrida finalizada
                 liberar_corrida(corrida_atual);
                 break;
             }
@@ -160,7 +164,7 @@ int main() {
 
                 // Instancia e insere o piloto na Árvore AVL. 
                 // Troféus (0) e Status ("Disponivel") são passados por padrão.
-                Piloto *novo_piloto = criar_piloto(nome, categoria, velocidade, 0, "Disponivel");
+                Piloto *novo_piloto = criar_piloto(nome, categoria, "Disponivel", velocidade, 0);
                 arvore_pilotos = inserir_piloto_no(arvore_pilotos, novo_piloto);
                 
                 printf("Sucesso! %s foi registrado na Federacao.\n", nome);

@@ -10,9 +10,9 @@ typedef struct {
     int pontuacao_campeonato;
 }Piloto;
 
-Piloto* criarPiloto(const char *nome, const char *categoria, char *status, int velBase, int qtdTrofeus );
+Piloto* criar_piloto(const char *nome, const char *categoria, char *status, int velBase, int qtdTrofeus );
 
-void imprimirPiloto(Piloto *p);
-void liberarPiloto(Piloto *p);
+void imprimir_piloto(Piloto *p);
+void liberar_piloto(Piloto *p);
 
 #endif
