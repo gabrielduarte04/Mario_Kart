@@ -115,7 +115,12 @@ NoAVL* remover_piloto_no(NoAVL *raiz, const char *nome) {
     } else {
         // Encontrou o nó a ser removido
         if ((raiz->esquerda == NULL) || (raiz->direita == NULL)) {
-            NoAVL *temp = raiz->esquerda ? raiz->esquerda : raiz->direita;
+            NoAVL *temp;
+            if (raiz->esquerda != NULL) {
+                temp = raiz->esquerda;
+            } else {
+                temp = raiz->direita;
+            }
 
             if (temp == NULL) {
                 temp = raiz;

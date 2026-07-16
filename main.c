@@ -17,7 +17,7 @@
 
 // Função para iniciar o sistema com dados iniciais 
 void inicializar_sistema(NoAVL **arvore, MaxHeap *heap, PilhaItens *pilha_cogumelos, PilhaItens *pilha_cascos, Kart *frota[]) {
-    // Cadastrando Pilotos com a função criarPiloto e ordem correta (nome, categoria, status, velBase, qtdTrofeus)
+    // Cadastrando Pilotos com a função criarPiloto e ordem correta
     *arvore = inserir_piloto_no(*arvore, criar_piloto("Mario", "Medio", "Disponivel", 85, 10));
     *arvore = inserir_piloto_no(*arvore, criar_piloto("Bowser", "Pesado", "Disponivel", 95, 8));
     *arvore = inserir_piloto_no(*arvore, criar_piloto("Toad", "Leve", "Disponivel", 70, 5));

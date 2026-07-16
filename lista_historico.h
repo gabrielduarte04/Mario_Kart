@@ -12,7 +12,7 @@ typedef struct {
     int qtd_participantes;
 } RegistroCorrida;
 
-// Utilização do alias Nodo para a Lista Dupla
+// Utilização do Nodo para a Lista Dupla
 typedef struct Nodo {
     RegistroCorrida dados;
     struct Nodo *anterior;

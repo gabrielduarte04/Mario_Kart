@@ -159,7 +159,7 @@ void exibir_piloto_com_mais_participacoes(Historico *h) {
     }
 
     if (qtd_unicos == 0) {
-        printf("\nNenhum piloto encontrado no historico, Senhor.\n");
+        printf("\nNenhum piloto encontrado no historico.\n");
         return;
     }
 

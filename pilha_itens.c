@@ -51,9 +51,9 @@ void consultar_estoque(PilhaItens *pilha, const char *nome_categoria) {
 
 // Remover itens consumidos
 void consumir_item_definitivamente(Item *i) {
-    // Quando o item é gasto na corrida, ele apenas sofre o free() final.
-    // Como ele já foi retirado da Pilha pelo 'distribuir_item',
-    // não existe o risco de estar em dois lugares ao mesmo tempo
+    /* Quando o item é gasto na corrida, ele apenas sofre o free() final.
+       Como ele já foi retirado da Pilha pelo 'distribuir_item',
+       não existe o risco de estar em dois lugares ao mesmo tempo*/
     liberar_item(i);
 }
 
